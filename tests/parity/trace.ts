@@ -160,6 +160,7 @@ export const ENTITY_EXCLUDE: ReadonlySet<string> = new Set([
   'prevFacing',
   'netUpdatedAt', // online wire cadence
   'netInterval',
+  'collisionHeightScale', // presentation/interaction hitbox height; pinned by focused unit tests
   'vx', // air velocity (locomotion interpolation)
   'vy',
   'vz',

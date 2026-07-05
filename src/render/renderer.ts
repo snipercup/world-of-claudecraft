@@ -486,6 +486,8 @@ export interface EntityView {
   height: number;
   /** last-applied entity scale (group.scale); diffed each frame for live size buffs */
   liveScale: number;
+  /** last-applied sim-authored click capsule height multiplier */
+  liveCollisionHeightScale: number;
   /** what removeView pulls back out of clickTargets */
   clickTarget: THREE.Object3D;
   nameplate: HTMLDivElement;
@@ -3299,6 +3301,7 @@ export class Renderer {
       // raycasting skinned meshes is expensive — pick against the invisible
       // capsule proxy instead (three's raycaster ignores `visible`)
       if (!isQuestVision) visual.clickProxy.userData.entityId = e.id;
+      visual.clickProxy.scale.y = height * e.collisionHeightScale;
       clickTarget = visual.clickProxy;
     } else {
       group.add(body!);
@@ -3476,6 +3479,7 @@ export class Renderer {
       skin: e.skin,
       mainhandItemId: e.mainhandItemId,
       liveScale: e.scale,
+      liveCollisionHeightScale: e.collisionHeightScale,
       loco: newLocoTrack(),
       stepAccum: 0,
       wasAirborne: false,
@@ -3542,12 +3546,15 @@ export class Renderer {
     const idx = this.clickTargets.indexOf(oldClickTarget);
     v.visual.dispose();
     v.group.remove(v.visual.root);
+    next.root.traverse((o) => (o.userData.entityId = e.id));
     if (!e.templateId.startsWith('vision_')) next.clickProxy.userData.entityId = e.id;
+    next.clickProxy.scale.y = next.height * e.collisionHeightScale;
     if (idx >= 0) this.clickTargets[idx] = next.clickProxy;
     v.visual = next;
     v.visualKey = nextKey;
     v.clickTarget = next.clickProxy;
     v.height = next.height;
+    v.liveCollisionHeightScale = e.collisionHeightScale;
     v.skin = e.skin;
     v.mainhandItemId = e.mainhandItemId; // next was built holding the current weapon
     v.group.add(next.root);
@@ -4214,6 +4221,10 @@ export class Renderer {
       if (e.scale !== v.liveScale) {
         v.liveScale = e.scale;
         v.group.scale.setScalar(e.scale);
+      }
+      if (e.collisionHeightScale !== v.liveCollisionHeightScale) {
+        v.liveCollisionHeightScale = e.collisionHeightScale;
+        v.visual.clickProxy.scale.y = v.height * e.collisionHeightScale;
       }
 
       // swimming pose: prone at the surface (derived here — the sim is unaware).

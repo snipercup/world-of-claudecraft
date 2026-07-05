@@ -30,7 +30,12 @@
 import { MOBS } from '../data';
 import type { SimContext } from '../sim_context';
 import { clearThreat } from '../threat';
-import { dist2d, type Entity, NYTHRAXIS_BOSS_ID } from '../types';
+import {
+  dist2d,
+  ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
+  type Entity,
+  NYTHRAXIS_BOSS_ID,
+} from '../types';
 import { groundHeight } from '../world';
 
 const PACK_FRENZY_AURA_ID = 'pack_frenzy'; // attack-speed buff granted to surviving packmates
@@ -42,6 +47,7 @@ export function respawnMob(ctx: SimContext, mob: Entity): void {
   }
   ctx.clearNonPlayerStatAuras(mob);
   mob.dead = false;
+  mob.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   mob.lootable = false;
   mob.loot = null;
   mob.lootRecipientIds = undefined;

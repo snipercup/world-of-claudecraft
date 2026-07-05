@@ -587,6 +587,7 @@ function dynamicFields(e: Entity): Record<string, unknown> {
     mhp: e.maxHp,
   };
   if (e.dead) out.dead = 1;
+  if (e.collisionHeightScale !== 1) out.chs = e.collisionHeightScale;
   if (e.ghost) out.gh = 1; // released spirit (ghost form); renders translucent
   if (e.lootable) out.loot = 1;
   if (e.hostile) out.h = 1;

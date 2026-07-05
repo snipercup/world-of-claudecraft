@@ -32,6 +32,7 @@ import {
   type ArenaFormat,
   type ArenaStanding,
   DT,
+  ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
   type Entity,
 } from '../types';
 
@@ -716,6 +717,7 @@ export function resetForArena(ctx: SimContext, e: Entity): void {
 
 export function readyArenaFighter(ctx: SimContext, e: Entity, opts: { clearPrep: boolean }): void {
   e.dead = false;
+  e.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   if (opts.clearPrep) {
     // Arena is a clean competitive slate: unlike the overworld/delve death paths it
     // intentionally strips ALL auras (including The Keeper's Toll) so a PvE penalty
@@ -871,6 +873,7 @@ export function returnFromArena(ctx: SimContext, match: ArenaMatch): void {
     e.prevPos = { ...e.pos };
     e.facing = ret.facing;
     e.dead = false;
+    e.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
     ctx.rebucket(e);
     ctx.emit({ type: 'respawn', pid: e.id });
   }

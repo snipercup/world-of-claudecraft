@@ -25,7 +25,7 @@ import { recalcPlayerStats } from './entity';
 import { aurasSurvivingDeath } from './resurrection';
 import type { SimContext } from './sim_context';
 import type { Entity, SimEvent, Vec3 } from './types';
-import { CAST_COMPLETE_EPS, DT } from './types';
+import { CAST_COMPLETE_EPS, DT, ENTITY_LIVING_COLLISION_HEIGHT_SCALE } from './types';
 
 // Mobs that despawn after sitting out of combat too long (boss adds that should not
 // litter the world). The idle timer is reset to DAMAGE_IDLE_DESPAWN_SECONDS whenever
@@ -169,11 +169,13 @@ export function releaseSpiritInDelve(ctx: SimContext, pid: number): void {
   run.deathsThisRun[pid] = deaths;
   if (deaths >= 2) {
     r.e.dead = false;
+    r.e.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
     ctx.failDelveRun(run);
     return;
   }
   const p = r.e;
   p.dead = false;
+  p.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   const entry = ctx.delveModuleEntry(run);
   p.pos = entry;
   p.prevPos = { ...entry };

@@ -21,6 +21,7 @@ import {
   DELVE_COMPANION_MAX_RANK,
   DT,
   dist2d,
+  ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
   type Entity,
   MELEE_RANGE,
   PET_TELEPORT_DISTANCE,
@@ -68,6 +69,7 @@ export function updateDelveCompanion(ctx: SimContext, companion: Entity): void {
       // re-entering mid-run cannot recharge the boon.
       run.companionReviveUsed = true;
       fallen.dead = false;
+      fallen.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
       fallen.hp = Math.max(1, Math.round(fallen.maxHp * 0.5));
       if (fallen.resourceType === 'mana')
         fallen.resource = Math.max(fallen.resource, Math.round(fallen.maxResource * 0.5));

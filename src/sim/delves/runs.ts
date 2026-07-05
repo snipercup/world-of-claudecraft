@@ -60,6 +60,7 @@ import {
   type DelveRun,
   DT,
   dist2d,
+  ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
   type Entity,
   INSTANCE_EMPTY_TIMEOUT,
   type RiteIntensity,
@@ -624,6 +625,7 @@ export function ejectToDelveDoor(
   if (!r) return;
   const p = r.e;
   p.dead = false;
+  p.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   const door = ctx.groundPos(delve.doorPos.x, delve.doorPos.z - 4);
   p.pos = delveMemberSpawnPos(ctx, door, slotIndex);
   p.prevPos = { ...p.pos };

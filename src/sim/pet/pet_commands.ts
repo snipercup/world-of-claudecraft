@@ -44,6 +44,7 @@ import {
   type Aura,
   DEMON_HEAL_CAST_ID,
   dist2d,
+  ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
   type Entity,
   isPetClass,
   PET_GROWL_INTERVAL,
@@ -493,6 +494,7 @@ export function revivePet(ctx: SimContext, pid?: number): void {
     return;
   }
   pet.dead = false;
+  pet.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   pet.hostile = false;
   pet.ownerId = r.e.id;
   pet.aiState = 'idle';

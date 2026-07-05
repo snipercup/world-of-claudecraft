@@ -32,6 +32,7 @@ import { addThreat, clearThreat } from '../threat';
 import type { Entity } from '../types';
 import {
   dist2d,
+  ENTITY_DEAD_COLLISION_HEIGHT_SCALE,
   FISHING_CAST_ID,
   isConsuming,
   MAX_LEVEL,
@@ -475,6 +476,7 @@ function reflectSpellWard(
 
 export function handleDeath(ctx: SimContext, e: Entity, killer: Entity | null): void {
   e.dead = true;
+  e.collisionHeightScale = ENTITY_DEAD_COLLISION_HEIGHT_SCALE;
   e.hp = 0;
   ctx.clearNonPlayerStatAuras(e);
   // The Keeper's Toll (Resurrection Sickness) is the one debuff that survives death: it

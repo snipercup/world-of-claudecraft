@@ -36,7 +36,7 @@ talk only to the **`SimContext` seam** (`sim_context.ts`).
   `entities`/`players`/grids/the shared collections) + the cross-system callbacks. The
   file's comments are the authoritative callback registry (signature + which slice owns
   each). Append-only: add callbacks, never rename or repurpose one.
-- **`types.ts`**: ALL shared types AND the global tuning constants + classic-era formulas (`TICK_RATE`, `DT`, `GCD`, ranges, `XP_TABLE`, hit/armor/rage math, post-cap `virtualLevel`/prestige). Plus the `SimEvent` union and the `Entity` shape.
+- **`types.ts`**: ALL shared types AND the global tuning constants + classic-era formulas (`TICK_RATE`, `DT`, `GCD`, ranges, `XP_TABLE`, hit/armor/rage math, post-cap `virtualLevel`/prestige). Plus the `SimEvent` union and the `Entity` shape. Entity interaction bounds include `collisionHeightScale`: death lowers this sim-owned height multiplier, revive and respawn paths restore it, and movement/pathing continue to use the XZ footprint.
 - `data.ts`: merges `content/*` into the flat tables (`ABILITIES`, `MOBS`, `NPCS`, `QUESTS`, `ITEMS`, `CAMPS`, `DUNGEONS`) and owns world-layout consts (`WORLD_SIZE`, `instanceOrigin`, `arenaOrigin`, `zoneAt`, `dungeonAt`).
 - `entity.ts`: `createPlayer/createMob/createNpc/createGroundObject` + `recalcPlayerStats` (the ONE place derived stats are computed from class/level/gear/auras/talent `mods`).
 - `entity_roster.ts`: roster ops the coordinator drives: `addEntity`/`dropEntity`/`rebucket`, despawn decay, the delayed-event drain, the ground-AoE tick, and release-spirit.

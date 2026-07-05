@@ -130,6 +130,7 @@ describe('exclude lists are pinned and real (anti-loosening guard)', () => {
   // gate" rule). Update these snapshots only when intentionally re-categorizing.
   it('ENTITY_EXCLUDE membership is exactly the pinned set', () => {
     expect([...ENTITY_EXCLUDE].sort()).toEqual([
+      'collisionHeightScale',
       'color',
       'equippedItems',
       'guild',

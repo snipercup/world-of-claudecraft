@@ -34,7 +34,7 @@ import {
 } from './resurrection';
 import type { PlayerMeta } from './sim';
 import type { SimContext } from './sim_context';
-import { dist2d, type Entity, type Vec3 } from './types';
+import { dist2d, ENTITY_LIVING_COLLISION_HEIGHT_SCALE, type Entity, type Vec3 } from './types';
 
 // --- tuning -----------------------------------------------------------------
 // A released spirit runs faster than the living, ignoring slows (a ghost cannot be
@@ -187,6 +187,7 @@ function reviveAt(
   sickness: boolean,
 ): void {
   p.dead = false;
+  p.collisionHeightScale = ENTITY_LIVING_COLLISION_HEIGHT_SCALE;
   p.ghost = false;
   p.corpsePos = null;
   p.pos = ctx.groundPos(pos.x, pos.z);

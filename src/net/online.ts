@@ -845,6 +845,7 @@ function blankEntity(id: number): Entity {
     objectItemId: null,
     dungeonId: null,
     dead: false,
+    collisionHeightScale: 1,
     ghost: false,
     corpsePos: null,
     scale: 1,
@@ -1410,6 +1411,7 @@ export class ClientWorld implements IWorld {
       e.overheadEmoteUntil = e.overheadEmoteId ? Number.POSITIVE_INFINITY : 0;
       if (typeof w.emoSeq === 'number') e.overheadEmoteSeq = w.emoSeq;
       e.dead = nowDead;
+      e.collisionHeightScale = w.chs ?? 1;
       e.ghost = !!w.gh; // released spirit: rendered translucent, runs faster
       e.lootable = !!w.loot;
       e.hostile = !!w.h;

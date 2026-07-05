@@ -2,7 +2,7 @@ import type { TalentModifiers } from './content/talents';
 import { aggregateSetBonuses, CLASSES, ITEMS, MOBS, type NpcDef } from './data';
 import { meetsLevelRequirement } from './item_level_req';
 import type { Entity, EquipSlot, MobTemplate, PlayerClass, Stats, Vec3 } from './types';
-import { EQUIP_SLOTS, SPELL_POWER_PER_INT } from './types';
+import { ENTITY_LIVING_COLLISION_HEIGHT_SCALE, EQUIP_SLOTS, SPELL_POWER_PER_INT } from './types';
 
 function baseEntity(id: number, pos: Vec3): Entity {
   return {
@@ -125,6 +125,7 @@ function baseEntity(id: number, pos: Vec3): Entity {
     objectItemId: null,
     dungeonId: null,
     dead: false,
+    collisionHeightScale: ENTITY_LIVING_COLLISION_HEIGHT_SCALE,
     ghost: false,
     corpsePos: null,
     scale: 1,

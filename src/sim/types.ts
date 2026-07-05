@@ -47,6 +47,12 @@ export const CAST_COMPLETE_EPS = 1e-9;
 export const FISHING_CAST_ID = 'fishing';
 export const FISHING_CAST_NAME = 'Fishing';
 export const FISHING_CAST_TIME = 5;
+// Entity interaction hitbox height multiplier. Living entities use their full
+// visual click capsule; corpses are visually prone, so their sim-authored
+// interaction volume is flattened to keep camera/picking rays from hitting an
+// invisible upright body above the corpse.
+export const ENTITY_LIVING_COLLISION_HEIGHT_SCALE = 1;
+export const ENTITY_DEAD_COLLISION_HEIGHT_SCALE = 0.18;
 // Seconds an empty instance idles before it resets. Shared by the dungeon instance
 // reaper (instances/dungeons.ts) and the delve reaper (sim.ts). NYTHRAXIS_BOSS_ID
 // (the dungeon raid-door seal also keys off it) lives lower in this file (C1 relocation).
@@ -1635,6 +1641,11 @@ export interface Entity {
   dungeonId: string | null; // set on dungeon door/exit portals
   // misc
   dead: boolean;
+  // Sim-authored interaction hitbox height as a multiplier of the visual's
+  // standing capsule. Death flattens this value so a prone corpse no longer
+  // ray-picks/collides as an invisible upright cylinder; movement/pathing remains
+  // XZ-footprint based and therefore ignores this vertical presentation bound.
+  collisionHeightScale: number;
   // Ghost/spirit state for the WoW-style death -> corpse-run -> resurrect loop.
   // `ghost` is true once the player has released their spirit: `dead` stays true
   // (a ghost still cannot fight or be attacked) but the spirit CAN move, runs at a
